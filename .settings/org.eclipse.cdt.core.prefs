@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/CPLUS_INCLUDE_PATH/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/CPLUS_INCLUDE_PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/CPLUS_INCLUDE_PATH/value=/Users/jz/boost_library/include\:/Users/jz/gsl_lib/include\:/Users/jz/lshkit-0.2.1/include\:/Users/jz/CBLAS/include\:/Users/jz/stxxl-1.4.0/include\:/Users/jz/stxxl-1.4.0/build/include\:/usr/local/include
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/LD_LIBRARY_PATH/delimiter=\:
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/LD_LIBRARY_PATH/operation=replace
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/LD_LIBRARY_PATH/value=/Users/jz/boost_library/lib\:/Users/jz/gsl_lib/lib\:/Users/jz/lshkit-0.2.1\:/Users/jz/BLAS\:/Users/jz/CBLAS/lib\:/Users/jz/stxxl-1.4.0/build/lib
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/append=true
+environment/project/cdt.managedbuild.toolchain.gnu.macosx.base.342493331/appendContributed=true

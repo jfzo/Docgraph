@@ -26,3 +26,9 @@
 *.exe
 *.out
 *.app
+
+test.graphml
+
+Docgraph
+
+test_sequence.csv
