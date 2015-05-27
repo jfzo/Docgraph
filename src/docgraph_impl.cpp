@@ -15,7 +15,8 @@ docgraph::docgraph() {
 	num_edges = 0;
 	//weight = boost::get(boost::edge_weight, G);
 	edge_id = boost::get(boost::edge_name, G);
-	edge_freq = boost::get(edge_freq_t(), G);
+	//edge_freq = boost::get(edge_freq_t(), G);
+	edge_freq = boost::get(boost::edge_weight, G);
 	edge_tdist = boost::get(edge_tdistsum_t(), G);
 	index = boost::get(boost::vertex_index, G);
 	name = boost::get(boost::vertex_name, G);
@@ -84,6 +85,9 @@ void docgraph::add_edge(std::string t1, std::string t2) {
 	//std::cout << "Added edge: "<< t1 << " -- " << t2 << "("<< dist<<")" <<" now sum_dist:" << edge_tdist[e] << "\n";
 }
 
+/**
+ * Prints the vertices and then the edges (source and target vertices).
+ */
 void docgraph::traverse_edges() {
 	int counter = 0;
 	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
@@ -116,9 +120,33 @@ void docgraph::graphml_dump(const char * out) {
 
 	dp.property("label", boost::get(boost::vertex_name, G) );
 	dp.property("degree",boost::get(boost::vertex_degree, G) );
-	dp.property("freq", boost::get(edge_freq_t(), G) );
+	//dp.property("freq", boost::get(edge_freq_t(), G) );
+	dp.property("freq", boost::get(boost::edge_weight, G) );
 
 	ofstream os(out, iostream::out);
 	boost::write_graphml(os, G, dp, true);
 	os.close();
 }
+
+void docgraph::load_graphml(const char* in) {
+	boost::dynamic_properties dp;
+
+	dp.property("label", boost::get(boost::vertex_name, G) );
+	dp.property("degree",boost::get(boost::vertex_degree, G) );
+	//dp.property("freq", boost::get(edge_freq_t(), G) );
+	dp.property("freq", boost::get(boost::edge_weight, G) );
+
+	ifstream is(in, iostream::in);
+
+	boost::read_graphml(is, G, dp, 0);
+
+	is.close();
+}
+
+
+
+
+
+
+
+

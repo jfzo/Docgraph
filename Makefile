@@ -4,7 +4,7 @@ CPP_FILES := $(wildcard src/*.cpp)
 
 OBJS := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 
-LIBS =
+LIBS = -lboost_graph
 
 TARGET =	Docgraph
 

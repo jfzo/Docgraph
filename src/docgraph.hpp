@@ -60,6 +60,7 @@ struct edge_freq_t {
 	typedef boost::edge_property_tag kind;
 };
 
+
 struct edge_tdistsum_t {
 	typedef boost::edge_property_tag kind;
 };
@@ -93,7 +94,8 @@ class docgraph {
 
 	//boost::property_map<GRAPH_T, boost::edge_weight_t>::type weight;
 	boost::property_map<GRAPH_T, boost::edge_name_t>::type edge_id;
-	boost::property_map<GRAPH_T, edge_freq_t>::type edge_freq;
+	boost::property_map<GRAPH_T, boost::edge_weight_t>::type edge_freq;
+	//boost::property_map<GRAPH_T, edge_freq_t>::type edge_freq;
 	boost::property_map<GRAPH_T, edge_tdistsum_t>::type edge_tdist;
 	boost::property_map<GRAPH_T, boost::vertex_index_t>::type index;
 	boost::property_map<GRAPH_T, boost::vertex_name_t>::type name;
@@ -132,7 +134,15 @@ public:
 	 */
 	void print_vertex_info(VERTEX);
 
+	/**
+	 * Saves or stores the graph in graphml format.
+	 */
 	void graphml_dump(const char *);
+
+	/**
+	 * Loads a graph from a previously saved file.
+	 */
+	void load_graphml(const char*);
 };
 
 }
