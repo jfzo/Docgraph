@@ -10,8 +10,12 @@ The CSV file contains one document per line and then a comma separated list of t
 
 *Example of usage:* 
 
-*docgraph_build.main term_sequence.csv stopword-list.txt 3 tipster_docnet.graphml*
+*docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm.graphml*
 
 #### **docgraph_degrees.main**
 Loads  a biterm net already stored in Graphml format and outputs the in and out degrees of each vertex (token) to a CSV file.
 This program receives 2 parameters, namely: The location a the graphml input file and the path of the output CSV file.
+
+*Example of usage:* 
+
+*docgraph_degrees.main biterm.graphml biterm_in_out_degrees.csv*
