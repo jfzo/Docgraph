@@ -24,15 +24,17 @@ int main(int argc, char* argv[]) {
 	cout << "Fields contain word-vertex, in-degree, out-degree\n";
 	cout << "**************************************************\n";
 
-	if (argc < 2) {
+	if (argc < 3) {
 		cout << argv[0] << " <graphml-input> <csv-degrees-output>\n";
 		return -1;
 	}
 
 	DG::docgraph dg;
+	cout << "Loading net from file "<< argv[1]<<endl;
 	dg.load_graphml(argv[1]);
 
-	ofstream os ("bitermnet_in-out.degrees", iostream::out);
+	cout << "Writing CSV file with in-degrees and out-degrees for each term in file "<< argv[2] << endl;
+	ofstream os (argv[2], iostream::out);
 	dg.get_degrees(os);
 	os.close();
 	//dg.traverse_edges();
