@@ -162,7 +162,7 @@ int main(int argc, char* argv[]) {
 
 	dgraph.graphml_dump( "test.graphml");
 	// TODO: extract degrees and store them.
-
+/*
 	DG::docgraph dgraph2;
 	dgraph2.load_graphml("test.graphml");
 
@@ -170,6 +170,6 @@ int main(int argc, char* argv[]) {
 	dgraph.traverse_edges();
 	cout << "\nLoaded graph:"<< endl;
 	dgraph2.traverse_edges();
-
+*/
 	return 0;
 }
