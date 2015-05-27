@@ -34,3 +34,5 @@ Docgraph
 test_sequence.csv
 
 *.main
+
+*.graphml

@@ -128,7 +128,7 @@ void docgraph::graphml_dump(const char * out) {
 	boost::dynamic_properties dp;
 
 	dp.property("label", boost::get(boost::vertex_name, G));
-	dp.property("degree", boost::get(boost::vertex_degree, G));
+	//dp.property("degree", boost::get(boost::vertex_degree, G));
 	//dp.property("freq", boost::get(edge_freq_t(), G) );
 	dp.property("freq", boost::get(boost::edge_weight, G));
 
@@ -141,7 +141,7 @@ void docgraph::load_graphml(const char* in) {
 	boost::dynamic_properties dp;
 
 	dp.property("label", boost::get(boost::vertex_name, G));
-	dp.property("degree", boost::get(boost::vertex_degree, G));
+	//dp.property("degree", boost::get(boost::vertex_degree, G));
 	//dp.property("freq", boost::get(edge_freq_t(), G) );
 	dp.property("freq", boost::get(boost::edge_weight, G));
 
