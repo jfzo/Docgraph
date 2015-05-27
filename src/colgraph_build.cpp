@@ -120,7 +120,8 @@ void init_stopwords(const char * infile, set<string>& stopwords){
 int main(int argc, char* argv[]) {
 
 	cout << "*****************************************************************************\n";
-	cout << "Builds and stores biterm-net of a document collection  into a Graphml file.\n";
+	cout << "Builds and stores biterm-net of a document collection  into a CSV file.";
+	cout << "Each line of the CSV output file will contain the token, the in and out degrees.\n";
 	cout << "This program assumes that the csv-input file contains\n";
 	cout << "a comma-separated token list representing one document per line.\n";
 	cout << "*****************************************************************************\n";
@@ -180,7 +181,11 @@ int main(int argc, char* argv[]) {
 	inf.close();
 
 	cout << "Writing collection graph to file "<< argv[4] <<endl;
-	dgraph.graphml_dump(argv[4]);
+	//dgraph.graphml_dump(argv[4]);
+
+	ofstream os(argv[4], iostream::out);
+	dgraph.get_degrees(os);
+	os.close();
 	return 0;
 }
 
