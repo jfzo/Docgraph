@@ -17,7 +17,11 @@ obj/%.o: src/%.cpp
 $(TARGET):	$(OBJS)
 	$(CXX) -o $(TARGET) $(OBJS) $(LIBS)
 
+%.main: obj/docgraph_impl.o obj/%.o
+	$(CXX) -o $@ $(addprefix obj/,$(@:.main=.o)) obj/docgraph_impl.o $(LIBS)
+
 all:	$(TARGET)
 
 clean:
 	rm -f $(OBJS) $(TARGET)
+
