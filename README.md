@@ -19,7 +19,7 @@ a comma-separated token list representing one file per line.
 
 *Example of usage:* 
 
-*docgraph_build.main test_sequence.csv example_stopwords.txt 3 biterm_docnet.csv*
+*docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_docnet.csv*
 
 #### **docgraph_degrees.main**
 Loads  a biterm net already stored in Graphml format and outputs the in and out degrees of each vertex (token) to a CSV file.
