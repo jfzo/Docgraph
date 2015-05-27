@@ -1,4 +1,12 @@
 /*
+ * colgraph_build.cpp
+ *
+ *  Created on: 27-05-2015
+ *      Author: jz
+ */
+
+
+/*
  * docgraph_build.cpp
  *
  *  Created on: 27-05-2015
@@ -111,23 +119,19 @@ void init_stopwords(const char * infile, set<string>& stopwords){
 
 int main(int argc, char* argv[]) {
 
-	cout << "*************************************************************\n";
-	cout << "Builds and stores a biterm-net for each document of a collection\n";
-	cout << "into a csv file. This output file will contain in each line a\n";
-	cout << "sequence of tokens, each one together with its in and out degrees.\n";
+	cout << "*****************************************************************************\n";
+	cout << "Builds and stores biterm-net of a document collection  into a Graphml file.\n";
 	cout << "This program assumes that the csv-input file contains\n";
-	cout << "a comma-separated token list representing one file per line.\n";
-	cout << "*************************************************************\n";
+	cout << "a comma-separated token list representing one document per line.\n";
+	cout << "*****************************************************************************\n";
 
 	if (argc < 5) {
-		cout << argv[0] << " <csv-doc-collection> <stopwords-file> <windows-size> <csv-output>\n";
+		cout << argv[0] << " <csv-doc-collection> <stopwords-file> <windows-size> <graphml-output>\n";
 		return -1;
 	}
 
 	/* Open input file */
 	ifstream inf(argv[1], iostream::in);
-
-	ofstream out(argv[4], iostream::out);
 
 	/* Set window size and create empty document graph */
 	int wsize = stoi(argv[3]);
@@ -145,8 +149,7 @@ int main(int argc, char* argv[]) {
 	/* Extract tokens and build biterm net */
 	list<string> queue;
 	string pivot, t;
-	string fileid;
-	FILESTATUS val = next_token(inf, fileid); //FILEID
+	FILESTATUS val = next_token(inf, t); //FILEID
 
 	val = next_token(inf, pivot);
 	while (val != EOF_FOUND) {
@@ -162,18 +165,8 @@ int main(int argc, char* argv[]) {
 			}
 			// end of current document
 			queue.clear();
-			val = next_token(inf, fileid); // FILEID
+			val = next_token(inf, t); // FILEID
 			val = next_token(inf, pivot);
-
-			/* clearing the net */
-			//cout << "OUTPUT OF NET FOR FILE "<< fileid <<"\n";
-			//dgraph.traverse_edges();
-			// store the current graph.
-			out << fileid <<"\n";
-			dgraph.get_degrees(out);
-			out << "\n";
-			dgraph.clear();
-
 		} else if (queue.size() < (wsize - 1)) {
 			queue.push_back(t);
 		} else { // |queue| == (w - 1)
@@ -186,11 +179,12 @@ int main(int argc, char* argv[]) {
 
 	inf.close();
 
-	//cout << "Writing docnet to file "<< argv[4] <<endl;
-	//dgraph.graphml_dump(argv[4]);
-	out.close();
+	cout << "Writing collection graph to file "<< argv[4] <<endl;
+	dgraph.graphml_dump(argv[4]);
 	return 0;
 }
+
+
 
 
 

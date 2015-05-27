@@ -13,6 +13,10 @@ using namespace std;
 using namespace DG;
 
 docgraph::docgraph() {
+	init();
+}
+
+void docgraph::init() {
 	num_edges = 0;
 	//weight = boost::get(boost::edge_weight, G);
 	edge_id = boost::get(boost::edge_name, G);
@@ -25,6 +29,9 @@ docgraph::docgraph() {
 	count = boost::get(vertex_count_t(), G);
 	traversed = false;
 	num_vertices = 0;
+
+	term_vertex.clear();
+	id_edge.clear();
 }
 
 void docgraph::add_term(std::string t) {
@@ -92,11 +99,12 @@ void docgraph::add_edge(std::string t1, std::string t2) {
 void docgraph::traverse_edges() {
 	int counter = 0;
 	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
-	std::cout << "Vertices:" << std::endl;
+	std::cout << "(Vertices)" << std::endl;
 	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
 		std::cout << name[*v] << std::endl;
 	}
 
+	std::cout << "(Edges)" << std::endl;
 	boost::graph_traits<GRAPH_T>::edge_iterator e, e_end;
 	for (boost::tie(e, e_end) = edges(G); e != e_end; ++e) {
 		counter++;
@@ -144,12 +152,13 @@ void docgraph::load_graphml(const char* in) {
 	is.close();
 }
 
-void DG::docgraph::get_degrees(unordered_map<string, pair <int,int> >& T) {
+void DG::docgraph::get_degrees(unordered_map<string, pair<int, int> >& T) {
 	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
 	//std::cout << "Vertices:" << std::endl;
 	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
 		//std::cout << name[*v] << std::endl;
-		T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
+		T[boost::get(name, *v)] = std::make_pair(boost::in_degree(*v, G),
+				boost::out_degree(*v, G));
 	}
 }
 
@@ -159,17 +168,21 @@ void DG::docgraph::get_degrees(ostream& os) {
 	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
 		//std::cout << name[*v] << std::endl;
 		//T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
-		os << boost::get(name, *v)  << "," << boost::in_degree(*v, G) <<"," << boost::out_degree(*v, G) << "\n";
+		os << boost::get(name, *v) << "|" << boost::in_degree(*v, G) << "|"
+				<< boost::out_degree(*v, G) << "\n";
 	}
 }
 
-
-
-
-
-
-
-
-
-
+void DG::docgraph::clear() {
+	/*
+	cout << "bef |V|:" << boost::num_vertices(G) << "|E|:"
+			<< boost::num_edges(G) << endl;
+			*/
+	G.clear();
+	init();
+	/*
+	cout << "now |V|:" << boost::num_vertices(G) << "|E|:"
+			<< boost::num_edges(G) << endl;
+			*/
+}
 

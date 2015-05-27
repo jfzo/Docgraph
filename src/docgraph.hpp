@@ -84,7 +84,6 @@ typedef boost::graph_traits<GRAPH_T>::edge_descriptor EDGE;
 typedef GRAPH_T::edge_property_type Weight;
 
 class docgraph {
-	edge_t inneredge;
 	GRAPH_T G;
 	size_t num_vertices;
 	std::unordered_map<std::string, VERTEX> term_vertex;
@@ -106,6 +105,8 @@ class docgraph {
 	 * Displays some information of the given vertex.
 	 */
 	void print_vertex_info(VERTEX);
+
+	void init();
 
 public:
 	size_t num_edges;
@@ -150,6 +151,11 @@ public:
 	void get_degrees(std::unordered_map<std::string, std::pair<int, int> >&);
 
 	void get_degrees(std::ostream&);
+
+	/**
+	 * Deletes every vertex and edge of the graph.
+	 */
+	void clear();
 };
 
 }
