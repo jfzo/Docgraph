@@ -168,7 +168,7 @@ void DG::docgraph::get_degrees(ostream& os) {
 	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
 		//std::cout << name[*v] << std::endl;
 		//T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
-		os << boost::get(name, *v) << "|" << boost::in_degree(*v, G) << "|"
+		os << boost::get(name, *v) << ":" << boost::in_degree(*v, G) << ":"
 				<< boost::out_degree(*v, G) << "\n";
 	}
 }

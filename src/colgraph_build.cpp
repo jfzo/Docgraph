@@ -120,7 +120,7 @@ void init_stopwords(const char * infile, set<string>& stopwords){
 int main(int argc, char* argv[]) {
 
 	cout << "*****************************************************************************\n";
-	cout << "Builds and stores biterm-net of a document collection  into a CSV file.";
+	cout << "Builds and stores biterm-net of a document collection  into a CSV file.\n";
 	cout << "Each line of the CSV output file will contain the token, the in and out degrees.\n";
 	cout << "This program assumes that the csv-input file contains\n";
 	cout << "a comma-separated token list representing one document per line.\n";
