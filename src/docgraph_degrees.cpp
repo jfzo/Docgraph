@@ -27,6 +27,10 @@ int main(int argc, char* argv[]) {
 	DG::docgraph dg;
 	dg.load_graphml(argv[1]);
 
+	ofstream os ("bitermnet_in-out.degrees", iostream::out);
+	dg.get_degrees(os);
+	os.close();
+	//dg.traverse_edges();
 	return 0;
 }
 

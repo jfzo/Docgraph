@@ -16,6 +16,7 @@
 #include <map>
 #include <tuple>
 #include <cmath>
+#include <fstream>
 
 typedef uint32_t UINT_T;
 
@@ -60,12 +61,11 @@ struct edge_freq_t {
 	typedef boost::edge_property_tag kind;
 };
 
-
 struct edge_tdistsum_t {
 	typedef boost::edge_property_tag kind;
 };
 
-typedef boost::property<boost::edge_weight_t, double,
+typedef boost::property<boost::edge_weight_t, int,
 		boost::property<boost::edge_name_t, UINT_T,
 				boost::property<edge_freq_t, UINT_T,
 						boost::property<edge_tdistsum_t, double> > > > EdgeProperties;
@@ -76,7 +76,7 @@ typedef boost::property<boost::vertex_index_t, int,
 						boost::property<vertex_count_t, int> > > > VertexProperties;
 
 /** Graph Definition */
-typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS,
+typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS,
 		VertexProperties, EdgeProperties> GRAPH_T;
 
 typedef boost::graph_traits<GRAPH_T>::vertex_descriptor VERTEX;
@@ -101,6 +101,11 @@ class docgraph {
 	boost::property_map<GRAPH_T, boost::vertex_name_t>::type name;
 	boost::property_map<GRAPH_T, boost::vertex_degree_t>::type degree;
 	boost::property_map<GRAPH_T, vertex_count_t>::type count;
+
+	/**
+	 * Displays some information of the given vertex.
+	 */
+	void print_vertex_info(VERTEX);
 
 public:
 	size_t num_edges;
@@ -130,11 +135,6 @@ public:
 	void traverse_edges();
 
 	/**
-	 * Displays some information of the given vertex.
-	 */
-	void print_vertex_info(VERTEX);
-
-	/**
 	 * Saves or stores the graph in graphml format.
 	 */
 	void graphml_dump(const char *);
@@ -143,6 +143,13 @@ public:
 	 * Loads a graph from a previously saved file.
 	 */
 	void load_graphml(const char*);
+
+	/**
+	 * Get degrees from the graph and put each term label as a key and its degree as the value.
+	 */
+	void get_degrees(std::unordered_map<std::string, std::pair<int, int> >&);
+
+	void get_degrees(std::ostream&);
 };
 
 }

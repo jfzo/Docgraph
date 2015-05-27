@@ -7,6 +7,7 @@
 #include "docgraph.hpp"
 #include <iostream>
 #include <fstream>
+#include <utility>
 
 using namespace std;
 using namespace DG;
@@ -118,10 +119,10 @@ void docgraph::print_vertex_info(VERTEX v) {
 void docgraph::graphml_dump(const char * out) {
 	boost::dynamic_properties dp;
 
-	dp.property("label", boost::get(boost::vertex_name, G) );
-	dp.property("degree",boost::get(boost::vertex_degree, G) );
+	dp.property("label", boost::get(boost::vertex_name, G));
+	dp.property("degree", boost::get(boost::vertex_degree, G));
 	//dp.property("freq", boost::get(edge_freq_t(), G) );
-	dp.property("freq", boost::get(boost::edge_weight, G) );
+	dp.property("freq", boost::get(boost::edge_weight, G));
 
 	ofstream os(out, iostream::out);
 	boost::write_graphml(os, G, dp, true);
@@ -131,10 +132,10 @@ void docgraph::graphml_dump(const char * out) {
 void docgraph::load_graphml(const char* in) {
 	boost::dynamic_properties dp;
 
-	dp.property("label", boost::get(boost::vertex_name, G) );
-	dp.property("degree",boost::get(boost::vertex_degree, G) );
+	dp.property("label", boost::get(boost::vertex_name, G));
+	dp.property("degree", boost::get(boost::vertex_degree, G));
 	//dp.property("freq", boost::get(edge_freq_t(), G) );
-	dp.property("freq", boost::get(boost::edge_weight, G) );
+	dp.property("freq", boost::get(boost::edge_weight, G));
 
 	ifstream is(in, iostream::in);
 
@@ -142,6 +143,28 @@ void docgraph::load_graphml(const char* in) {
 
 	is.close();
 }
+
+void DG::docgraph::get_degrees(unordered_map<string, pair <int,int> >& T) {
+	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
+	//std::cout << "Vertices:" << std::endl;
+	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
+		//std::cout << name[*v] << std::endl;
+		T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
+	}
+}
+
+void DG::docgraph::get_degrees(ostream& os) {
+	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
+	//std::cout << "Vertices:" << std::endl;
+	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
+		//std::cout << name[*v] << std::endl;
+		//T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
+		os << boost::get(name, *v)  << "," << boost::in_degree(*v, G) <<"," << boost::out_degree(*v, G) << "\n";
+	}
+}
+
+
+
 
 
 
