@@ -19,8 +19,13 @@
 using namespace std;
 int main(int argc, char* argv[]) {
 
+	cout << "**************************************************\n";
+	cout << "Outputs degrees into a CSV file.\n";
+	cout << "Fields contain word-vertex, in-degree, out-degree\n";
+	cout << "**************************************************\n";
+
 	if (argc < 2) {
-		cout << "Enter the input filename.\n";
+		cout << argv[0] << " <graphml-input> <csv-degrees-output>\n";
 		return -1;
 	}
 
