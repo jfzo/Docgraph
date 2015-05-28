@@ -35,5 +35,6 @@ docgraph_degrees.main biterm.graphml biterm_in_out_degrees.csv
 # Compilation instructions
 
 For each *'.main'* program described above there is a target in the Makefile. For instance the program *docgraph_degrees.main* is built by executing the command:
-
-*make docgraph_degrees.main*
+```
+make docgraph_degrees.main
+```
