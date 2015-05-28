@@ -10,7 +10,7 @@ Each line of the CSV output file will contain a token (vertex), its in and out d
 
 *Example of usage:* 
 ```
-colgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees.csv
+$ colgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees.csv
 ```
 
 ### **docgraph_build.main**
@@ -20,7 +20,7 @@ a comma-separated token list representing one file per line.
 
 *Example of usage:* 
 ```
-docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees_bydoc.csv
+$ docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees_bydoc.csv
 ```
 
 # Compilation instructions
