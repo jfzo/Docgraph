@@ -27,5 +27,5 @@ $ docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees_bydoc
 
 For each *'.main'* program described above there is a target in the Makefile. For instance the program *docgraph_build.main* is built by executing the command:
 ```
-make docgraph_build.main
+$ make docgraph_build.main
 ```
