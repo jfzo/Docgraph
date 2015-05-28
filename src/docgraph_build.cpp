@@ -169,7 +169,7 @@ int main(int argc, char* argv[]) {
 			//cout << "OUTPUT OF NET FOR FILE "<< fileid <<"\n";
 			//dgraph.traverse_edges();
 			// store the current graph.
-			out << fileid <<"\n";
+			out << ">" <<fileid <<"\n";
 			dgraph.get_degrees(out);
 			out << "\n";
 			dgraph.clear();

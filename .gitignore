@@ -36,3 +36,9 @@ test_sequence.csv
 *.main
 
 *.graphml
+
+biterm_docnet.csv
+
+biterm_in_out_degrees
+
+*.graphml
