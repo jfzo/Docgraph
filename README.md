@@ -23,18 +23,9 @@ a comma-separated token list representing one file per line.
 docgraph_build.main term_sequence.csv stopword-list.txt 3 biterm_degrees_bydoc.csv
 ```
 
-#### **docgraph_degrees.main**
-Loads  a biterm net already stored in Graphml format and outputs the in and out degrees of each vertex (token) to a CSV file.
-This program receives 2 parameters, namely: The location a the graphml input file and the path of the output CSV file.
-
-*Example of usage:* 
-```
-docgraph_degrees.main biterm.graphml biterm_in_out_degrees.csv
-```
-
 # Compilation instructions
 
-For each *'.main'* program described above there is a target in the Makefile. For instance the program *docgraph_degrees.main* is built by executing the command:
+For each *'.main'* program described above there is a target in the Makefile. For instance the program *docgraph_build.main* is built by executing the command:
 ```
-make docgraph_degrees.main
+make docgraph_build.main
 ```
