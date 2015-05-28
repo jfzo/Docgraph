@@ -1,4 +1,4 @@
-# Program description
+# Description of available programs
 
  Set of programs to build biterm-graphs representing documents and summarizing document collections. 
 
