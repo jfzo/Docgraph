@@ -6,7 +6,7 @@ OBJS := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 
 LIBS = -lboost_graph
 
-TARGET =	Docgraph
+TARGET = Docgraph
 
 ################
 
@@ -20,7 +20,7 @@ $(TARGET):	$(OBJS)
 %.main: obj/docgraph_impl.o obj/%.o
 	$(CXX) -o $@ $(addprefix obj/,$(@:.main=.o)) obj/docgraph_impl.o $(LIBS)
 
-all:	$(TARGET)
+all:	docgraph_build.main colgraph_build.main
 
 clean:
 	rm -f $(OBJS) $(TARGET) *.main
