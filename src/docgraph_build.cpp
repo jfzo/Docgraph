@@ -162,8 +162,10 @@ int main(int argc, char* argv[]) {
 			}
 			// end of current document
 			queue.clear();
-			val = next_token(inf, fileid); // FILEID
-			val = next_token(inf, pivot);
+
+
+            cout << "Writting info of "<< fileid << endl;
+
 
 			/* clearing the net */
 			//cout << "OUTPUT OF NET FOR FILE "<< fileid <<"\n";
@@ -173,6 +175,11 @@ int main(int argc, char* argv[]) {
 			dgraph.get_degrees(out);
 			out << "\n";
 			dgraph.clear();
+
+            /** get the next document Id **/
+			val = next_token(inf, fileid); // FILEID
+			val = next_token(inf, pivot);
+
 
 		} else if (queue.size() < (wsize - 1)) {
 			queue.push_back(t);
