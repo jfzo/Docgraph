@@ -164,7 +164,7 @@ int main(int argc, char* argv[]) {
 			queue.clear();
 
 
-            cout << "Writting info of "<< fileid << endl;
+            //cout << "Writting info of "<< fileid << endl;
 
 
 			/* clearing the net */
