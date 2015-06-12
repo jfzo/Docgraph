@@ -173,6 +173,20 @@ void DG::docgraph::get_degrees(ostream& os) {
 	}
 }
 
+
+void DG::docgraph::get_degrees(ostream& os, const std::set<std::string>& stopwords){
+	boost::graph_traits<GRAPH_T>::vertex_iterator v, v_end;
+	//std::cout << "Vertices:" << std::endl;
+	for (boost::tie(v, v_end) = boost::vertices(G); v != v_end; ++v) {
+		//std::cout << name[*v] << std::endl;
+		//T[ boost::get(name, *v) ] = std::make_pair(boost::in_degree(*v, G), boost::out_degree(*v, G));
+		if ( stopwords.find(boost::get(name, *v) ) == stopwords.cend()){
+			os << boost::get(name, *v) << ":" << boost::in_degree(*v, G) << ":"
+				<< boost::out_degree(*v, G) << "\n";
+		}
+	}
+}
+
 void DG::docgraph::clear() {
 	/*
 	cout << "bef |V|:" << boost::num_vertices(G) << "|E|:"

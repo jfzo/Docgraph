@@ -5,7 +5,6 @@
  *      Author: jz
  */
 
-
 //============================================================================
 // Name        : Docgraph.cpp
 // Author      : J.Z.
@@ -13,7 +12,6 @@
 // Copyright   : Your copyright notice
 // Description : Hello World in C, Ansi-style
 //============================================================================
-
 #include <iostream>
 #include <vector>
 #include <string>
@@ -23,28 +21,38 @@
 #include <set>
 #include "docgraph.hpp"
 
-
-
 using namespace std;
 
 /**
- * Extract all pairs between the pivot word and every word in the list Q.
+ * Extract all pairs between the pivot word (avoiding stopwords) and every word in the list Q.
  * Then inserts each pair into the graph G.
  */
-void extract_edges(const string &p, const list<string>& Q, DG::docgraph& G, const set<string>& stopwords) {
+void extract_edges(const string &p, const list<string>& Q, DG::docgraph& G,
+		const set<string>& stopwords) {
 
-	if(stopwords.find(p) != stopwords.cend() )
+	if (stopwords.find(p) != stopwords.cend())
 		return;
 
 	for (auto s = Q.begin(); s != Q.end(); ++s) {
 		//cout << "edge: " << p << " -- " << *s << endl;
-		if(stopwords.find(*s) == stopwords.cend() )
+		if (stopwords.find(*s) == stopwords.cend())
 			G.add_edge(p, *s);
 
 	}
 }
 
 
+/**
+ * Extract all pairs between the pivot word and every word in the list Q.
+ * Then inserts each pair into the graph G.
+ */
+void extract_edges(const string &p, const list<string>& Q, DG::docgraph& G) {
+	for (auto s = Q.begin(); s != Q.end(); ++s) {
+		//cout << "edge: " << p << " -- " << *s << endl;
+		G.add_edge(p, *s);
+
+	}
+}
 
 enum FILESTATUS {
 	KEEP_READING, EOL_FOUND, EOF_FOUND
@@ -96,15 +104,15 @@ FILESTATUS next_token(ifstream &inf, string& s) {
 	return STAT; // returned true if there are more chars to read and false when an EOL o EOF are found.
 }
 
-void init_stopwords(const char * infile, set<string>& stopwords){
-	cout << "Reading stopwords from "<< infile << endl;
+void init_stopwords(const char * infile, set<string>& stopwords) {
+	cout << "Reading stopwords from " << infile << endl;
 	char name[256];
 	ifstream inf(infile, iostream::in);
 
-	while(inf.good() ){
-		inf.getline (name,256);
-		if( inf.gcount() > 0 )
-			stopwords.insert( name);
+	while (inf.good()) {
+		inf.getline(name, 256);
+		if (inf.gcount() > 0)
+			stopwords.insert(name);
 	}
 	inf.close();
 }
@@ -112,15 +120,18 @@ void init_stopwords(const char * infile, set<string>& stopwords){
 int main(int argc, char* argv[]) {
 
 	cout << "*************************************************************\n";
-	cout << "Builds and stores a biterm-net for each document of a collection\n";
+	cout
+			<< "Builds and stores a biterm-net for each document of a collection\n";
 	cout << "into a csv file. This output file will contain in each line a\n";
-	cout << "sequence of tokens, each one together with its in and out degrees.\n";
+	cout
+			<< "sequence of tokens, each one together with its in and out degrees.\n";
 	cout << "This program assumes that the csv-input file contains\n";
 	cout << "a comma-separated token list representing one file per line.\n";
 	cout << "*************************************************************\n";
 
 	if (argc < 5) {
-		cout << argv[0] << " <csv-doc-collection> <stopwords-file> <windows-size> <csv-output>\n";
+		cout << argv[0]
+				<< " <csv-doc-collection> <stopwords-file> <windows-size> <csv-output>\n";
 		return -1;
 	}
 
@@ -133,14 +144,12 @@ int main(int argc, char* argv[]) {
 	int wsize = stoi(argv[3]);
 	DG::docgraph dgraph;
 
-
 	/* Load stopwords */
 	set<string> stopwords;
 	init_stopwords(argv[2], stopwords);
 
-
-
-	cout << "Loading input file "<<argv[1] << ". Using stopwords file "<< argv[2]<<" and window-size "<<wsize << endl;
+	cout << "Loading input file " << argv[1] << ". Using stopwords file "
+			<< argv[2] << " and window-size " << wsize << endl;
 
 	/* Extract tokens and build biterm net */
 	list<string> queue;
@@ -154,37 +163,38 @@ int main(int argc, char* argv[]) {
 		val = next_token(inf, t);
 
 		if (val == EOL_FOUND) {
-			extract_edges(pivot, queue, dgraph, stopwords);
+			//extract_edges(pivot, queue, dgraph, stopwords);
+			extract_edges(pivot, queue, dgraph);
 			while (queue.size() > 1) {
 				pivot = queue.front();
 				queue.pop_front();
-				extract_edges(pivot, queue, dgraph, stopwords);
+				//extract_edges(pivot, queue, dgraph, stopwords);
+				extract_edges(pivot, queue, dgraph);
 			}
 			// end of current document
 			queue.clear();
 
-
-            //cout << "Writting info of "<< fileid << endl;
-
+			//cout << "Writting info of "<< fileid << endl;
 
 			/* clearing the net */
 			//cout << "OUTPUT OF NET FOR FILE "<< fileid <<"\n";
 			//dgraph.traverse_edges();
 			// store the current graph.
-			out << ">" <<fileid <<"\n";
-			dgraph.get_degrees(out);
+			out << ">" << fileid << "\n";
+			//dgraph.get_degrees(out);
+			dgraph.get_degrees(out, stopwords);
 			out << "\n";
 			dgraph.clear();
 
-            /** get the next document Id **/
+			/** get the next document Id **/
 			val = next_token(inf, fileid); // FILEID
 			val = next_token(inf, pivot);
-
 
 		} else if (queue.size() < (wsize - 1)) {
 			queue.push_back(t);
 		} else { // |queue| == (w - 1)
-			extract_edges(pivot, queue, dgraph, stopwords);
+			//extract_edges(pivot, queue, dgraph, stopwords);
+			extract_edges(pivot, queue, dgraph);
 			pivot = queue.front();
 			queue.pop_front();
 			queue.push_back(t);
@@ -198,6 +208,4 @@ int main(int argc, char* argv[]) {
 	out.close();
 	return 0;
 }
-
-
 

@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <unordered_map>
 #include <map>
+#include <set>
 #include <tuple>
 #include <cmath>
 #include <fstream>
@@ -146,11 +147,23 @@ public:
 	void load_graphml(const char*);
 
 	/**
-	 * Get degrees from the graph and put each term label as a key and its degree as the value.
+	 * Gets degrees from the graph and put each term label as a key and its degree as the value.
 	 */
 	void get_degrees(std::unordered_map<std::string, std::pair<int, int> >&);
 
+	/**
+	 * Gets degrees from the graph and writes them into an output stream using
+	 * the format:
+	 * Vertex_name:in_deg:out_deg
+	 */
 	void get_degrees(std::ostream&);
+
+	/**
+	 * Gets degrees from the graph and writes (avoiding stopwords) them into an output stream using
+	 * the format:
+	 * Vertex_name:in_deg:out_deg
+	 */
+	void get_degrees(std::ostream&, const std::set<std::string>&);
 
 	/**
 	 * Deletes every vertex and edge of the graph.
