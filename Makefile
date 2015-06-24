@@ -1,10 +1,12 @@
-CXXFLAGS =	-std=c++11 -O2 -g -Wall -fmessage-length=0
+CXX = g++
+
+CXXFLAGS = -std=c++11 -O2 -g -Wall -fmessage-length=0 -I/Users/juan/boost_library/include
 
 CPP_FILES := $(wildcard src/*.cpp)
 
 OBJS := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 
-LIBS = -lboost_graph
+LIBS = -L/Users/juan/boost_library/lib -lboost_graph
 
 TARGET = Docgraph
 
